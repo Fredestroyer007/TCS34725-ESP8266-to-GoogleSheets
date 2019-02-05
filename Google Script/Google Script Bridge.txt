@@ -1,0 +1,71 @@
+/*
+ *  Redirige le data du Wemos vers le Google Sheets - Redirect data from the Wemos to the Google Sheets
+ *
+ *  Créer le 18 janvier 2019 - Created 18 January 2019
+ *  Par Frédéric Larochelle - By Frédéric Larochelle
+ *
+ */
+ 
+// Récupère le data - Get the data
+function doGet(e) { 
+  Logger.log( JSON.stringify(e) );  // voir les paramètres - view parameters
+  var result = 'Ok'; // assume une connection réussi - assume success
+  
+  if (e.parameter == 'undefined') {
+    result = 'Sans paramètres - No Parameters';
+  }
+  
+  else {
+    var sheet_id = '1kXeTrUWO_9RBQsQbSqNr1JTLxwxrQDSfEIeCokZTfmQ'; 		// Numéro d'identification de la feuille Google Sheets - Google Sheets ID
+    var sheet = SpreadsheetApp.openById(sheet_id).getActiveSheet();		// Récupère la feuille - get Active sheet
+    var newRow = sheet.getLastRow() + 1;						
+    var rowData = [];
+    
+    rowData[0] = new Date(); 									    // Temps pour la première colonne - Timestamp in column A
+    
+    for (var param in e.parameter) {                                    // Écrit les données dans la feuille - Write data on the sheet
+      Logger.log('Loop, param=' + param);
+      var value = stripQuotes(e.parameter[param]);
+      Logger.log(param + ':' + e.parameter[param]);
+      
+      switch (param) {
+        case 'red': //Paramètre - Parameter
+          rowData[1] = value; //Valeur dans la colonne B - Value in column B
+          result = 'Écrit sur la colonne B - Written on column B';
+          break;
+        case 'green': //Paramètre - Parameter
+          rowData[2] = value; //Valeur dans la colonne C - Value in column C
+          result += 'Écrit sur la colonne C - Written on column C';
+          break;
+        case 'blue': //Paramètre - Parameter
+          rowData[3] = value; //Valeur dans la colonne B - Value in column B
+          result = 'Écrit sur la colonne B - Written on column B';
+          break;
+        case 'clear': //Paramètre - Parameter
+          rowData[4] = value; //Valeur dans la colonne B - Value in column B
+          result = 'Écrit sur la colonne B - Written on column B';
+          break;
+        case 'tag': //Paramètre - Parameter
+          rowData[5] = value; //Valeur dans la colonne F - Value in column F
+          result += 'Écrit sur la colonne F - Written on column F';
+          break; 
+        default:
+          result = "unsupported parameter";
+      }
+    }
+    
+    Logger.log(JSON.stringify(rowData));
+    
+    // Écrit une nouvelle ligne dessous - Write new row below
+    var newRange = sheet.getRange(newRow, 1, 1, rowData.length);
+    newRange.setValues([rowData]);
+  }
+  
+  // Retourne le résultat de l'opération - Return result of operation
+  return ContentService.createTextOutput(result);
+}
+
+// Nettoyage - Cleanup
+function stripQuotes( value ) {
+  return value.replace(/^["']|['"]$/g, "");
+}
