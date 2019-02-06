@@ -1,6 +1,6 @@
 # Prétraitement des données - Data Preprocessing
 
-# Impoter les librairies - Importing the libraries
+# Importer les librairies - Importing the libraries
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -16,7 +16,7 @@ imputer = Imputer(missing_values = np.nan, strategy = 'mean', axis = 0)
 imputer = imputer.fit(X[:, 1:3])
 X[:, 1:3] = imputer.transform(X[:, 1:3])
 
-# Codage des données catégoriques - Encoding categorical data
+# Encodage des données catégoriques - Encoding categorical data
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 labelencoder_X = LabelEncoder()
 X[:, 0] = labelencoder_X.fit_transform(X[:, 0])
