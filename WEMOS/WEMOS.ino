@@ -4,7 +4,7 @@
  *  
  *  
  *  Pour que le code fonctionne, vous devez installer les drivers pour le wemos, visitez ce lien.
- *  For the code to work, you need the drivers for the wemos, here is the link :
+ *  For the code tjskdjkso work, you need the drivers for the wemos, here is the link :
  *  https://wiki.wemos.cc/downloads
  *  
  *  Vous avez aussi besoin d'installer le package pour pouvoir utiliser le wemos. Dans les préférences, entrer le lien URL suivant dans le URL de gestionnaires de cartes supplémentaires. 
